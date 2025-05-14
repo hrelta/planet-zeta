@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CaraBermain - Planet Zeta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background: url("images/B7A.jpg") no-repeat center center fixed;
+      background-size: cover;
+      position: center;
+      font-family: 'TIMES NEW ROMAN', sans-serif;
+    }
+
+    .bottom-left-button {
+      position: absolute;
+      bottom: 50px;
+      left: 50px;
+      cursor: pointer;
+    }
+    .bottom-left-button img {
+      width: 180px;
+      transition: transform 0.3s ease;
+    }
+    .bottom-left-button:hover img {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .bottom-left-button:active img {
+        transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <a class="bottom-left-button" href="MenuInd.html">
+    <img src="images/TB.png" alt="Back">
+  </a>
+  <script>
+    const music = document.getElementById("bgMusic");
+    const musicStatus = localStorage.getItem("musicStatus") || "on";
+    if (musicStatus === "on") {
+    music.play().catch(() => {});
+    }
+  </script>
+  <audio id="bgMusic" loop>
+    <source src="audio/music.mp3" type="audio/mpeg">
+  </audio>  
+</body>
+</html>

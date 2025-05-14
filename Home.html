@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home - Planet Zeta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh; 
+      width: 100vw; 
+      background: url("images/B1.jpg") no-repeat center center fixed;
+      background-size: cover; 
+      background-position: center;
+    }
+    .next-button {
+      position: fixed;
+      bottom: -130px;
+      right: 240px;
+      cursor: pointer;
+      transform: translateX(-50%);
+    }
+    .next-button img {
+      width: 350px; /* ukuran responsif terhadap lebar layar */
+      max-width: 470px; /* biar ga terlalu gede di layar kecil */
+      min-width: 390px; /* biar ga terlalu kecil di layar gede */
+      animation: float 2s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+    .next-button img:hover {
+      animation: none;
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+    .next-button img:active {
+      transform: scale(0.80);
+    }
+    @keyframes float {
+      0% {transform: translateY(0);}
+      50% {transform: translateY(-10px);}
+      100% {transform: translateY(0);}
+    }
+    .left-character {
+      position: fixed;
+      bottom: 80px;
+      left: 70px;
+      width: 250px;
+      animation: float 2s ease-in-out infinite;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .left-character:hover {
+      animation: none;
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .left-character:active {
+      transform: scale(1.1);
+    }
+    .right-character {
+      position: fixed;
+      bottom: 80px;
+      right: 70px;
+      width: 250px;
+      animation: float 2s ease-in-out infinite;
+      cursor: pointer;
+      z-index: 2;
+    }
+    .right-character:hover {
+      animation: none;
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .right-character:active {
+      transform: scale(1.1);
+    }
+    .info-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .info-box img {
+      width: 90vw;
+      max-width: 800px;
+      border-radius: 12px;
+    }
+    .close-info {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    .warning-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      display: none;
+    }
+    .warning-box img {
+      width: 500vw;
+      max-width: 1250px;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .close-warning {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    .arrow-button {
+      position: absolute;
+      bottom: 165px;
+      left: 70%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      z-index: 10001;
+    }
+    .arrow-button img {
+      width: 200px;
+      transition: transform 0.3s ease;
+      box-shadow: none;
+      background: none;
+      filter: none;
+    }
+    .arrow-button img:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+    .arrow-button img:active {
+      transform: scale(0.80);
+    }
+  </style>
+</head>
+<body>
+  <a class="next-button" onclick="showWarning()">
+    <img src="images/T1.png" alt="Next Level">
+  </a>
+    <img src="images/cwe.png" alt="Character Left" class="character left-character" onclick="showInfo('left')">
+    <img src="images/cwo.png" alt="Character Right" class="character right-character" onclick="showInfo('right')">
+    <div id="characterInfoOverlay" class="info-overlay">
+      <div class="info-box">
+        <span class="close-info" onclick="hideInfo()">✖</span>
+        <img id="infoImage" src="" alt="Character Info" />
+      </div>
+    </div>
+
+<div class="warning-overlay" id="warning">
+  <div class="warning-box">
+    <span class="close-warning" onclick="hideWarning()">✖</span>
+    <img src="images/TW.png" alt="Warning">
+    <a href="Menu.html" class="arrow-button">
+      <img src="images/TN.png" alt="Next">
+    </a>
+  </div>
+</div>
+
+
+  <script>
+    function showWarning() {
+      document.getElementById('warning').style.display = 'flex';
+    }
+    function hideWarning() {
+      document.getElementById('warning').style.display = 'none';
+    }
+    const music = document.getElementById("bgMusic");
+    const musicStatus = localStorage.getItem("musicStatus") || "on";
+    if (musicStatus === "on") {
+    music.play().catch(() => {});
+    }
+    function showInfo(side) {
+    const infoImg = document.getElementById('infoImage');
+      infoImg.src = side === 'left' 
+        ? 'images/icewe.png' 
+        : 'images/icowo.png';
+      document.getElementById('characterInfoOverlay').style.display = 'flex';
+    }
+    function hideInfo() {
+      document.getElementById('characterInfoOverlay').style.display = 'none';
+    }
+  </script>
+  <audio id="bgMusic" loop>
+    <source src="audio/music.mp3" type="audio/mpeg">
+  </audio>  
+</body>
+</html>

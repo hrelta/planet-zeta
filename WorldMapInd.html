@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Peta Dunia - Planet Zeta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background: url("images/B5.jpg") no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      overflow: hidden;
+      font-family: 'Times New Roman', serif;
+    }
+
+    .level-btn {
+      position: absolute;
+      width: 200px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .level-btn:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+
+    .locked {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    #level1 { top: 53%; left: 76%; }
+    #level2 { top: 6%; left: 84%; }
+    #level3 { top: 29%; left: 65%; }
+    #level4 { top: 70%; left: 4%; }
+    #level5 { top: 29%; left: 39%; }
+
+    #next-btn {
+      position: absolute;
+      bottom: 50px;
+      right: 50px;
+      width: 100px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    #next-btn:hover {
+      transform: scale(1.1);
+      filter: brightness(1.2);
+    }
+  </style>
+</head>
+<body>
+  <img src="images/TL1.png" class="level-btn" id="level1" onclick="goToLevel(1)" alt="Level 1">
+  <img src="images/TL2.png" class="level-btn" id="level2" onclick="goToLevel(2)" alt="Level 2">
+  <img src="images/TL3.png" class="level-btn" id="level3" onclick="goToLevel(3)" alt="Level 3">
+  <img src="images/TL4.png" class="level-btn" id="level4" onclick="goToLevel(4)" alt="Level 4">
+  <img src="images/TL5.png" class="level-btn" id="level5" onclick="goToLevel(5)" alt="Level 5">
+  <img src="images/TN.png" id="next-btn" onclick="goToNextPage()" alt="Next">
+
+  <script>
+    function goToLevel(level) {
+      window.location.href = `level${level}Ind.html`;
+    }
+    function goToNextPage() {
+      window.location.href = "WorldMap2Ind.html";
+    }
+    const progress = JSON.parse(localStorage.getItem("levelProgress")) || {};
+    if (!progress.level1) progress.level1 = true;
+    for (let i = 1; i <= 5; i++) {
+      const btn = document.getElementById(`level${i}`);
+      if (!progress[`level${i}`]) {
+        btn.classList.add("locked");
+      }
+    }
+    const music = document.getElementById("bgMusic");
+    const musicStatus = localStorage.getItem("musicStatus") || "on";
+    if (musicStatus === "on") {
+    music.play().catch(() => {});
+    }
+  </script>
+  <audio id="bgMusic" loop>
+    <source src="audio/music.mp3" type="audio/mpeg">
+  </audio>  
+</body>
+</html>

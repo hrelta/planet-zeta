@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 7 - Planet Zeta</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url("images/Lvl7Ind.jpg");
+      background-size: cover;
+      background-position: fixed;
+    }
+
+    .answer-group {
+        margin-top: 340px;
+        margin-left: -100px;
+    }
+    .answer-button {
+      display: block;
+      margin: -3px auto; 
+      border: none;
+      background: none;
+      cursor: pointer;
+      width: 150px;
+    }
+    .answer-button:hover {
+        transform: scale(1.08);
+        filter: brightness(1.2);
+    }
+    .answer-button:active img {
+        transform: scale(0.95);
+    }
+
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .popup-content {
+      position: relative;
+    }
+    .popup-content img {
+      width: 1280px;
+    }
+
+    .score-board {
+      position: fixed;
+      top: 30px;
+      left: 30px;
+      z-index: 20;
+      width: 200px;
+    }
+    .score-board img {
+      width: 100%;
+      display: block;
+    }
+    .score-text {
+      position: fixed;
+      top: 44px;
+      left: 140px;
+      color: white;
+      font-size: 35px;
+      font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
+      z-index: 21;
+    }
+
+    .close-btn {
+      position: fixed;
+      bottom: 50px;
+      left: 50px;
+      cursor: pointer;
+    }
+    .next-btn {
+        position: absolute;
+        bottom: 50px;
+        left: 1050px;
+        cursor: pointer;
+    }
+    .close-btn img {
+        width: 180px;
+    }
+    .next-btn img {
+        width: 180px;
+    }    .close-btn:hover img {
+        transform: scale(1.1);
+        filter: brightness(1.2);
+    }
+    .next-btn:hover img {
+        transform: scale(1.1);
+        filter: brightness(1.2);
+    }
+    .close-btn:active img {
+        transform: scale(0.95);
+    }
+    .next-btn:active img{
+        transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+    <div class="score-board">
+        <img src="images/Score.png" alt="Score Board">
+        <div class="score-text" id="score">00</div>
+    </div>   
+  <div class="answer-group">
+    <button class="answer-button" onclick="showPopup('right')">
+      <img src="images/O1L7Ind.png" alt="Option 1">
+    </button>
+    <button class="answer-button" onclick="showPopup('wrong')">
+      <img src="images/O2L7Ind.png" alt="Option 2">
+    </button>
+    <button class="answer-button" onclick="showPopup('wrong')">
+      <img src="images/O3L7Ind.png" alt="Option 3">
+    </button>
+  </div>
+
+  <div class="popup" id="wrongPopup">
+    <div class="popup-content">
+      <img src="images/WrongInd.png" alt="Wrong Answer">
+      <div class="close-btn" onclick="closePopup('wrong')">
+        <img src="images/TB.png" alt="Cancel">
+      </div>
+    </div>
+  </div>
+
+  <div class="popup" id="rightPopup">
+    <div class="popup-content">
+      <img src="images/RightInd.png" alt="Right Answer">
+      <div class="next-btn" onclick="goToNextLevel()">
+        <img src="images/TN.png" alt="Next">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let score = parseInt(localStorage.getItem('score')) || 0;
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById('score').innerText = score.toString().padStart(2, '0');
+    });
+    function showPopup(type) {
+      if (type === 'wrong') {
+        document.getElementById('wrongPopup').style.display = 'flex';
+      } else if (type === 'right') {
+        document.getElementById('rightPopup').style.display = 'flex';
+        score++;
+        localStorage.setItem('score', score);
+        document.getElementById('score').innerText = score.toString().padStart(2, '0');
+      }
+    }
+    function closePopup(type) {
+      if (type === 'wrong') {
+        document.getElementById('wrongPopup').style.display = 'none';
+      }
+    }
+    function goToNextLevel() {
+    let progress = JSON.parse(localStorage.getItem("levelProgress")) || {};
+        progress.level7 = true;
+        progress.level8 = true;
+        localStorage.setItem("levelProgress", JSON.stringify(progress));
+        setTimeout(() => {
+            window.location.href = "WorldMap2Ind.html";
+        }, 100);
+    }
+    const music = document.getElementById("bgMusic");
+    const musicStatus = localStorage.getItem("musicStatus") || "on";
+    if (musicStatus === "on") {
+    music.play().catch(() => {});
+    }
+  </script>
+  <audio id="bgMusic" loop>
+    <source src="audio/music.mp3" type="audio/mpeg">
+  </audio>  
+</body>
+</html>
